@@ -8,15 +8,13 @@ import Routes from './routes';
 import GlobalStyle from './styles/global';
 
 const App: React.FC = () => (
-  <>
-    <GlobalStyle />
-
+  <Router>
     <AppProvider>
-      <Router>
-        <Routes />
-      </Router>
+      <Routes />
     </AppProvider>
-  </>
+
+    <GlobalStyle />
+  </Router>
 );
 
 export default App;
