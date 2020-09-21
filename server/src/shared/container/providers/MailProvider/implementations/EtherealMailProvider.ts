@@ -21,11 +21,13 @@ export default class EtherealMailProvider implements IMailProvider {
   }
 
   public async sendMail(to: string, body: string): Promise<void> {
-    await this.client.sendMail({
+    const message = await this.client.sendMail({
       from: 'Equipe GoBarber',
       to,
       subject: 'Recuperação de senha',
       text: body,
     });
+
+    console.log(nodemailer.getTestMessageUrl(message));
   }
 }
