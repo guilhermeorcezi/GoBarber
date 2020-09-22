@@ -69,6 +69,7 @@ describe('CreateAppointment', () => {
 
     await fakeAppointmentsRepository.create({
       provider_id: 'user',
+      user_id: '123',
       date: new Date(2020, 4, 20, 17, 0, 0),
     });
 
