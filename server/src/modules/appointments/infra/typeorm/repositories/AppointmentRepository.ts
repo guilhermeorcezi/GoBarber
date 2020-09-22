@@ -18,7 +18,7 @@ class AppointmentRepository implements IAppointmentsRepository {
     const findAppointment = await this.ormRepository.findOne({
       where: { date },
     });
-    console.log('result', findAppointment);
+
     return findAppointment;
   }
 
