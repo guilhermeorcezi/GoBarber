@@ -1,12 +1,13 @@
-import nodemailer, { Transporter } from 'nodemailer';
-import { injectable, inject } from 'tsyringe';
-import IMailTemplateProvider from '@shared/container/providers/MailTemplateProvider/models/IMailTemplateProvider';
-import IMailProvider from '../models/IMailProvider';
-import ISendMailDTO from '../dtos/ISendMailDTO';
+import nodemailer, { Transporter } from 'nodemailer'
+import { injectable, inject } from 'tsyringe'
+
+import IMailTemplateProvider from '@shared/container/providers/MailTemplateProvider/models/IMailTemplateProvider'
+import IMailProvider from '../models/IMailProvider'
+import ISendMailDTO from '../dtos/ISendMailDTO'
 
 @injectable()
 export default class EtherealMailProvider implements IMailProvider {
-  private client: Transporter;
+  private client: Transporter
 
   constructor(
     @inject('MailTemplateProvider')
@@ -21,9 +22,10 @@ export default class EtherealMailProvider implements IMailProvider {
           user: account.user,
           pass: account.pass,
         },
-      });
-      this.client = transporter;
-    });
+      })
+
+      this.client = transporter
+    })
   }
 
   public async sendMail({
@@ -43,8 +45,9 @@ export default class EtherealMailProvider implements IMailProvider {
       },
       subject,
       html: await this.mailTemplateProvider.parse(templateData),
-    });
+    })
 
-    console.log(nodemailer.getTestMessageUrl(message));
+    console.log('Message sent: %s', message.messageId)
+    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(message))
   }
 }
