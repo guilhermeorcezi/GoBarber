@@ -1,10 +1,10 @@
 import React, { useCallback, useRef } from 'react';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
-import { FiMail, FiLock } from 'react-icons/fi';
+import { FiLock } from 'react-icons/fi';
 import * as Yup from 'yup';
 
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { useToast } from '../../hooks/ToastContext';
 
