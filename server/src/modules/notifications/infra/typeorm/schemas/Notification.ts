@@ -5,27 +5,27 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ObjectIdColumn,
-} from 'typeorm';
+} from 'typeorm'
 
 @Entity('notifications')
 class Notification {
   @ObjectIdColumn()
-  id: ObjectID;
+  id: ObjectID
 
   @Column()
-  content: string;
+  content: string
 
   @Column('uuid')
-  recipient_id: string;
+  recipient_id: string
 
   @Column({ default: false })
-  read: boolean;
+  read: boolean
 
   @CreateDateColumn()
-  created_at: Date;
+  created_at: Date
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updated_at: Date
 }
 
-export default Notification;
+export default Notification

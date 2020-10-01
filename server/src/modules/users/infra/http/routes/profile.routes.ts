@@ -1,15 +1,15 @@
-import { Router } from 'express';
-import { celebrate, Segments, Joi } from 'celebrate';
+import { Router } from 'express'
+import { celebrate, Segments, Joi } from 'celebrate'
 
-import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
-import ProfileController from '../controllers/ProfileController';
+import ProfileController from '../controllers/ProfileController'
 
-const profileRouter = Router();
-const profileController = new ProfileController();
+import ensureAuthenticated from '../middlewares/ensureAuthenticated'
 
-profileRouter.use(ensureAuthenticated);
+const profileRouter = Router()
+const profileController = new ProfileController()
 
-profileRouter.get('/', profileController.show);
+profileRouter.use(ensureAuthenticated)
+
 profileRouter.put(
   '/',
   celebrate({
@@ -22,6 +22,7 @@ profileRouter.put(
     },
   }),
   profileController.update,
-);
+)
+profileRouter.get('/', profileController.show)
 
-export default profileRouter;
+export default profileRouter

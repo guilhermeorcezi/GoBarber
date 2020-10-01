@@ -1,22 +1,21 @@
-import { injectable, inject } from 'tsyringe';
+import { injectable, inject } from 'tsyringe'
 
-import AppError from '@shared/errors/AppError';
+import AppError from '@shared/errors/AppError'
+import IHashProvider from '../providers/HashProvider/models/IHashProvider'
+import IUsersRepository from '../repositories/IUsersRepository'
 
-import IHashProvider from '../providers/HashProvider/models/IHashProvider';
-import IUsersRepository from '../repositories/IUsersRepository';
-
-import User from '../infra/typeorm/entities/User';
+import User from '../infra/typeorm/entities/User'
 
 interface IRequest {
-  user_id: string;
-  name: string;
-  email: string;
-  old_password?: string;
-  password?: string;
+  user_id: string
+  name: string
+  email: string
+  old_password?: string
+  password?: string
 }
 
 @injectable()
-class UpdateUserAvatarService {
+class UpdateProfileService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -32,36 +31,42 @@ class UpdateUserAvatarService {
     old_password,
     password,
   }: IRequest): Promise<User> {
-    const user = await this.usersRepository.findById(user_id);
+    const user = await this.usersRepository.findById(user_id)
 
-    if (!user) throw new AppError('user not found');
+    if (!user) {
+      throw new AppError('User not found')
+    }
 
-    const userWithUpdatedEmail = await this.usersRepository.findByEmail(email);
+    const userWithUpdatedEmail = await this.usersRepository.findByEmail(email)
 
-    if (userWithUpdatedEmail && userWithUpdatedEmail.id !== user_id)
-      throw new AppError('e-mail already in use');
+    if (userWithUpdatedEmail && userWithUpdatedEmail.id !== user_id) {
+      throw new AppError('E-mail already in use')
+    }
 
-    user.name = name;
-    user.email = email;
+    user.name = name
+    user.email = email
 
-    if (password && !old_password)
+    if (password && !old_password) {
       throw new AppError(
-        'you need to inform the old password to set a new password',
-      );
+        'You need to inform the old password to set a new password.',
+      )
+    }
 
     if (password && old_password) {
       const checkOldPassword = await this.hashProvider.compareHash(
         old_password,
         user.password,
-      );
+      )
 
-      if (!checkOldPassword) throw new AppError('Old password does not match');
+      if (!checkOldPassword) {
+        throw new AppError('Old password does not match.')
+      }
 
-      user.password = await this.hashProvider.generateHash(password);
+      user.password = await this.hashProvider.generateHash(password)
     }
 
-    return this.usersRepository.save(user);
+    return this.usersRepository.save(user)
   }
 }
 
-export default UpdateUserAvatarService;
+export default UpdateProfileService
