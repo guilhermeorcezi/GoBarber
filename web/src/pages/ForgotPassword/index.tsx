@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import { FiLogIn, FiMail } from 'react-icons/fi';
@@ -22,6 +22,7 @@ interface ForgotPasswordFormData {
 }
 
 const ForgotPassword: React.FC = () => {
+  const [loading, setLoading] = useState(false);
   const formRef = useRef<FormHandles>(null);
 
   const { addToast } = useToast();
@@ -61,6 +62,8 @@ const ForgotPassword: React.FC = () => {
           description:
             'Erro ao solicitar nova senha. Cheque se seu e-mail é válido.',
         });
+      } finally {
+        setLoading(false);
       }
     },
     [addToast],
@@ -81,7 +84,9 @@ const ForgotPassword: React.FC = () => {
               placeholder="E-mail"
             />
 
-            <Button type="submit">Recuperar</Button>
+            <Button loading={loading} type="submit">
+              Recuperar
+            </Button>
           </Form>
 
           <Link to="signup">
