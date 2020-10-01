@@ -31,6 +31,7 @@ const ForgotPassword: React.FC = () => {
     async (data: ForgotPasswordFormData) => {
       try {
         formRef.current?.setErrors({});
+        setLoading(true);
 
         const schema = Yup.object().shape({
           email: Yup.string()
