@@ -40,8 +40,8 @@ const Dashboard: React.FC = () => {
   }, []);
 
   const navigateToProfile = useCallback(() => {
-    signOut();
-  }, [signOut]);
+    navigate('Profile');
+  }, [navigate]);
 
   const navigateToCreateAppointment = useCallback(
     (providerId: string) => {
@@ -63,8 +63,8 @@ const Dashboard: React.FC = () => {
           <UserAvatar
             source={{
               uri:
-                user.avatar_url ||
-                'https://api.adorable.io/avatars/56/abott@adorable.png',
+                user.avatar_url
+                || 'https://api.adorable.io/avatars/56/abott@adorable.png',
             }}
           />
         </ProfileButton>
